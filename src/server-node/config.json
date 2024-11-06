@@ -1,0 +1,13 @@
+{
+    "database": {
+      "user": "myuser",
+      "password": "mypassword",
+      "host": "database-postgres",
+      "port": 5432,
+      "database": "mydb"
+    },
+    "server": {
+      "port": 3000
+    }
+  }
+  

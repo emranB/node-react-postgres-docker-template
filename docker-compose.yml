@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  database-postgres:
+    build:
+      context: ./src/database-postgres
+    environment:
+      - POSTGRES_USER=myuser
+      - POSTGRES_PASSWORD=mypassword
+      - POSTGRES_DB=mydb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  server-node:
+    build:
+      context: ./src/server-node
+    ports:
+      - "3000:3000"
+    depends_on:
+      - database-postgres
+
+  app-react:
+    build:
+      context: ./src/app-react
+    ports:
+      - "1111:5173"
+    depends_on:
+      - server-node
+    environment:
+      - VITE_REACT_APP_API_HOST=localhost
+      - VITE_REACT_APP_API_PORT=3000
+
+volumes:
+  postgres-data:

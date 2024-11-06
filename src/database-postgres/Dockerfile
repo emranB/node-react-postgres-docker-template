@@ -1,13 +1,10 @@
-# Dockerfile for database-postgres
 FROM postgres:latest
 
-# Set environment variables for the database
-ENV POSTGRES_USER=myuser
-ENV POSTGRES_PASSWORD=mypassword
-ENV POSTGRES_DB=mydb
-
-# Copy init script into the container
+COPY ./config.json /config/config.json
+COPY src/entrypoint.sh /docker-entrypoint-initdb.d/entrypoint.sh
 COPY src/init.sql /docker-entrypoint-initdb.d/
 
-# Expose the PostgreSQL port
+RUN apt-get update && apt-get install -y jq
+RUN chmod +x /docker-entrypoint-initdb.d/entrypoint.sh
+
 EXPOSE 5432
