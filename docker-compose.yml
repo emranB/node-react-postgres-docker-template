@@ -2,8 +2,7 @@ version: '3.8'
 
 services:
   database-postgres:
-    build:
-      context: ./src/database-postgres
+    image: emranb/database-postgres:latest
     environment:
       - POSTGRES_USER=myuser
       - POSTGRES_PASSWORD=mypassword
@@ -12,18 +11,33 @@ services:
       - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U myuser -d mydb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
 
   server-node:
-    build:
-      context: ./src/server-node
+    image: emranb/server-node:latest
     ports:
       - "3000:3000"
     depends_on:
       - database-postgres
+    environment:
+      - DATABASE_HOST=database-postgres
+      - DATABASE_USER=myuser
+      - DATABASE_PASSWORD=mypassword
+      - DATABASE_NAME=mydb
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
 
   app-react:
-    build:
-      context: ./src/app-react
+    image: emranb/app-react:latest
     ports:
       - "1111:5173"
     depends_on:
@@ -31,6 +45,12 @@ services:
     environment:
       - VITE_REACT_APP_API_HOST=localhost
       - VITE_REACT_APP_API_PORT=3000
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5173"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
 
 volumes:
   postgres-data:

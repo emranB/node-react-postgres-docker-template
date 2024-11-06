@@ -5,24 +5,45 @@ This project is a full-stack web application template using Node.js, React.js (w
 ## Project Structure
 
 ```plaintext
+# Node-React-Postgres-Docker-Template
+
+This project is a full-stack web application template using Node.js, React.js (with Vite), and PostgreSQL, all containerized using Docker. It demonstrates a modern 2024 design approach and efficient application architecture.
+
+## Project Structure
+
+```plaintext
 NODE-REACT-POSTGRES-DOCKER-TEMPLATE
 │
+├── .github
+│   └── workflows
+│       └── docker-compose.yml
 ├── src
 │   ├── app-react
 │   │   ├── src
-│   │   │   └── config.json
+│   │   │   ├── App.jsx
+│   │   │   ├── index.html
+│   │   │   ├── index.jsx
+│   │   │   ├── config.json
 │   │   └── Dockerfile
+│   │   └── entrypoint.sh
+│   │   └── package.json
+│   │   └── vite.config.js
 │   ├── database-postgres
 │   │   ├── src
-│   │   │   └── config.json
+│   │   │   ├── entrypoint.sh
+│   │   │   ├── init.sql
+│   │   ├── config.json
 │   │   └── Dockerfile
-│   └── server-node
-│       ├── src
-│       │   └── config.json
-│       └── Dockerfile
-│
+│   ├── server-node
+│   │   ├── src
+│   │   │   ├── index.js
+│   │   ├── config.json
+│   │   └── Dockerfile
+│   │   └── entrypoint.sh
+│   │   └── package.json
 ├── docker-compose.yml
-└── README.md
+├── README.md
+└── run.sh
 ```
 
 ## Services Overview
