@@ -49,7 +49,7 @@ Use Docker Compose to build and run the entire stack:
     docker-compose up --build
 
 #### 4. Access the Application
-- React Frontend: http://localhost:5173
+- React Frontend: http://localhost:1111
 - Node Backend: http://localhost:3000
 - Postgres Database: Accessible on port 5432 (configure as needed)
 
